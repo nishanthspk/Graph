@@ -31,8 +31,14 @@ function App() {
 
   return (
     <div>
-      {/* Render your data here */}
+        Dataupdates Information
+        {
+dataUpdateds.map((data)=>(
+  <p>{data.newData}</p>
+))
+        }
     </div>
+
   );
 }
 
