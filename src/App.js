@@ -4,38 +4,44 @@ import { createClient } from "urql";
 import { useEffect, useState } from 'react';
 
 function App() {
-  const [dataUpdateds, setDataupdates] = useState([]);
-  const QueryURL = "https://api.studio.thegraph.com/query/69475/test/version/latest";
+  const [dappaddeds, setDappaddeds] = useState([]);
+  const QueryURL = "https://api.studio.thegraph.com/query/69475/nish/version/latest";
   const query = `
-    query {
-      dataUpdateds(first: 5) {
-        id
-        newData
-        blockNumber
-        blockTimestamp
-      }
+  {
+    dappAddeds(first: 5) {
+      id
+      username
+      dappName
+      blockNumber
     }
+    projectCreateds(first: 5) {
+      id
+      projectName
+      projectId
+      blockNumber
+    }
+  }
   `;
   const client = createClient({
     url: QueryURL
   });
 
   useEffect(() => {
-    const getDataupdates = async () => {
+    const getDappaddeds = async () => {
       const { data } = await client.query(query).toPromise();
       console.log(data);
-      setDataupdates(data.dataUpdateds);
+      setDappaddeds(data.dataUpdateds);
     }
-    getDataupdates();
+    getDappaddeds();
   }, []);
 
   return (
     <div>
         Dataupdates Information
         {
-dataUpdateds.map((data)=>(
-  <p>{data.newData}</p>
-))
+// dappaddeds.map((data)=>(
+//   <p>{data.newData}</p>
+// ))
         }
     </div>
 
