@@ -1,23 +1,37 @@
 import logo from './logo.svg';
 import './App.css';
+import { createClient } from "urql";
+import { useEffect, useState } from 'react';
 
 function App() {
+  const [dataUpdateds, setDataupdates] = useState([]);
+  const QueryURL = "https://api.studio.thegraph.com/query/69475/test/version/latest";
+  const query = `
+    query {
+      dataUpdateds(first: 5) {
+        id
+        newData
+        blockNumber
+        blockTimestamp
+      }
+    }
+  `;
+  const client = createClient({
+    url: QueryURL
+  });
+
+  useEffect(() => {
+    const getDataupdates = async () => {
+      const { data } = await client.query(query).toPromise();
+      console.log(data);
+      setDataupdates(data.dataUpdateds);
+    }
+    getDataupdates();
+  }, []);
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div>
+      {/* Render your data here */}
     </div>
   );
 }
